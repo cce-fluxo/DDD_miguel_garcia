@@ -15,7 +15,7 @@ class Paciente (db.Model):
     exames = db.relationship ('Exame', backref = 'paciente')
     receitas = db.relationship ('Receita', backref = 'paciente')
 
-    medicos = db.relationship ('Medico', secondary=association_table, backref='paciente')
+    
 
 
 
