@@ -6,8 +6,9 @@ class Medico (db.Model):
     id = db.Column(db.Integer, primary_key = True)
     nome = db.Column(db.String(20), nullable = False)
     email = db.Column(db.String(40), nullable = False)
-    tipo = db.Column(db.String(40), nullable = False)
+    especialidade = db.Column(db.String(40), nullable = False)
     cpf = db.Column(db.Integer, nullable = False)
+    crm = db.Column(db.Integer, nullable = False)
     idade = db.Column(db.Integer, nullable = False)
 
     
