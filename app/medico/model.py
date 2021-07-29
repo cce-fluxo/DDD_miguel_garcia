@@ -22,5 +22,5 @@ class Medico (db.Model):
         'idade':self.idade,
         'especialidade':self.especialidade,
         'crm':self.crm,
-        'idade':self.idade,
+        'idade':self.idade
         }
