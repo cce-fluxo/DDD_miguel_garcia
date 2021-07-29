@@ -21,6 +21,8 @@ class MedicosCreate (MethodView):
         idade = dados.get ('idade')
         email = dados.get ('email')
         senha = dados.get ('senha')
+        especialidade = dados.get('especialidade')
+        crm = dados.get('crm')
 
         medico = Medico.query.filter_by(email = email).first()
 
@@ -35,7 +37,7 @@ class MedicosCreate (MethodView):
         senha_hash = bcrypt.hashpw(senha.encode(), bcrypt.gensalt())
 
 
-        medico = Medico(nome=nome, cpf=cpf, idade=idade, email=email, senha_hash=senha_hash)
+        medico = Medico(nome=nome, cpf=cpf, idade=idade, email=email, especialidade=especialidade, crm=crm, senha_hash=senha_hash)
         db.session.add (medico)
         db.session.commit()
 

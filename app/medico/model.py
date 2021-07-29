@@ -1,5 +1,5 @@
 from app.extensions import db
-from app.association import association_table
+from sqlalchemy.orm import backref
 
 class Medico (db.Model):
     __tablename__ = 'medico'
@@ -10,10 +10,17 @@ class Medico (db.Model):
     cpf = db.Column(db.Integer, nullable = False)
     crm = db.Column(db.Integer, nullable = False)
     idade = db.Column(db.Integer, nullable = False)
+    senha_hash = db.Column(db.String(100), nullable = False)
 
     
-    consultas = db.relationship ('Consulta', backref = 'medico')
-    exames = db.relationship ('Exame', backref = 'medico')
-    receitas = db.relationship ('Receita', backref = 'medico')
 
 
+    def json(self):
+        return {'nome': self.nome,
+        'email':self.email,
+        'cpf': self.cpf,
+        'idade':self.idade,
+        'especialidade':self.especialidade,
+        'crm':self.crm,
+        'idade':self.idade,
+        }
