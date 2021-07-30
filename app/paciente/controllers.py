@@ -32,6 +32,11 @@ class PacientesCreate (MethodView):
         if not isinstance (nome,str) or not isinstance (idade, int):
             return {'error':'tipo invalido'}, 400
 
+        if not isinstance (cpf,int) or not isinstance (email, str):
+            return {'error':'tipo invalido'}, 400
+
+        
+
         senha_hash = bcrypt.hashpw(senha.encode(), bcrypt.gensalt())
 
 
