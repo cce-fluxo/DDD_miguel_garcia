@@ -18,6 +18,5 @@ class Paciente (db.Model):
         return {'nome': self.nome,
         'email':self.email,
         'cpf': self.cpf,
-        'idade':self.idade,
         'idade':self.idade
         }
