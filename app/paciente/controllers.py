@@ -4,7 +4,7 @@ from app.extensions import db
 from flask.views import MethodView 
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 
-import bcrypt
+#import bcrypt
 
 
 
@@ -37,10 +37,10 @@ class PacientesCreate (MethodView):
 
         
 
-        senha_hash = bcrypt.hashpw(senha.encode(), bcrypt.gensalt())
+        #senha_hash = bcrypt.hashpw(senha.encode(), bcrypt.gensalt())
 
 
-        paciente = Paciente(nome=nome, cpf=cpf, idade=idade, email=email, senha_hash=senha_hash)
+        paciente = Paciente(nome=nome, cpf=cpf, idade=idade, email=email, senha=senha)
         db.session.add (paciente)
         db.session.commit()
 
