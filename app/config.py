@@ -7,7 +7,7 @@ class Config:
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     JSON_SORT_KEYS = False
 
-    JWT_SECRET_KEY = environ.get('SECRET_KEY')
+    JWT_SECRET_KEY = environ.get('JWL_SECRET_KEY')
 
     DEBUG = True
     
