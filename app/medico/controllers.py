@@ -37,7 +37,7 @@ class MedicosCreate (MethodView):
         if not isinstance (cpf,int) or not isinstance (email, str):
             return {'error':'tipo invalido'}, 400
 
-        senha_hash = bcrypt.hashpw(senha.encode(), bcrypt.gensalt())
+        senha_hash = bcrypt.hashpw(senha.encode('utf8'), bcrypt.gensalt())
 
 
         medico = Medico(nome=nome, cpf=cpf, idade=idade, email=email, especialidade=especialidade, crm=crm, senha_hash=senha_hash)
@@ -116,7 +116,7 @@ class MedicoLogin(MethodView):
         senha = dados.get ('senha')
         
         medico = Medico.query.filter_by(email = email).first()
-        if (not medico) or (not bcrypt.checkpw(senha.encode(), medico.senha_hash)):
+        if (not medico) or (not bcrypt.checkpw(senha.encode('utf8'), medico.senha_hash)):
             return {'error':'Email ou senha inválida'}, 400
         
         token = create_access_token(identity = medico.id)
