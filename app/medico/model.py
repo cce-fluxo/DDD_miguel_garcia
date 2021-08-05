@@ -10,7 +10,7 @@ class Medico (db.Model):
     cpf = db.Column(db.Integer, nullable = False)
     crm = db.Column(db.Integer, nullable = False)
     idade = db.Column(db.Integer, nullable = False)
-    senha_hash = db.Column(db.String, nullable = False)
+    senha_hash = db.Column(db.LargeBinary(128), nullable = False)
     
 
     
