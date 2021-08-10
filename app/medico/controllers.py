@@ -1,13 +1,15 @@
+from flask.wrappers import Request
 from app.medico.model import Medico
 from flask import request, jsonify
 from app.extensions import db
 from flask.views import MethodView 
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 from app.medico.schema import MedicoSchema
-from app.models import BaseModel
 from app.filters import filter
-
 import bcrypt
+
+
+
 
 
 
