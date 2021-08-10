@@ -14,5 +14,6 @@ class MedicoSchema(ma.SQLAlchemySchema):
     cpf=ma.String(required=True)
     crm=ma.String(required=True)
     especialidade=ma.String(required=True)
+    idade=ma.String(required=True)
     email=ma.Email(required=True)
     senha = ma.String(Load_only=True, required=True)
