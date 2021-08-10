@@ -3,6 +3,7 @@ from flask import request, jsonify
 from app.extensions import db
 from flask.views import MethodView 
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
+from app.medico.schema import MedicoSchema
 
 import bcrypt
 
@@ -10,8 +11,8 @@ import bcrypt
 
 class MedicosCreate (MethodView): 
     def get(self):
-        medico=Medico.query.all()
-        return jsonify([medico.json() for medico in medico]), 200
+        schema = MedicoSchema(many = True)
+        return jsonify(schema.dump(Medico.query.all())),200
 
 
     def post(self):
