@@ -80,7 +80,7 @@ class PacientesDetails(MethodView): #/paciente/details/<int:id>
         paciente= Paciente.query.get_or_404(id)
         db.session.delete(paciente)
         db.session.commit()
-        return paciente.json(), 200
+        return {}, 200
 
 class PacienteLogin(MethodView):
     def post(self):

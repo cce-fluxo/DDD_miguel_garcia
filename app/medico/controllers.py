@@ -94,7 +94,7 @@ class MedicosDetails(MethodView): #/medico/details/<int:id>
         medico= Medico.query.get_or_404(id)
         db.session.delete(medico)
         db.session.commit()
-        return {}, 204
+        return {}, 200
 
 class MedicoLogin(MethodView):
     def post(self):
