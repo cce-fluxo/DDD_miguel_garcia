@@ -29,7 +29,7 @@ class PacientesCreate (MethodView):
             db.session.rollback()
             abort(
                 make_response(jsonify({'errors':str(err.orig)},400)))
-        return paciente.json(), 200
+        return  schema.dump(paciente),200
 
 class PacientesDetails(MethodView): #/paciente/details/<int:id>
     decorators = [jwt_required()]
