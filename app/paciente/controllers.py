@@ -89,12 +89,15 @@ class PacienteLogin(MethodView):
         senha = dados.get ('senha')
         
         paciente = Paciente.query.filter_by(email = email).first()
+        
         if (not paciente) or (not bcrypt.checkpw(senha.encode(), paciente.senha_hash)):
             return {'error':'Email ou senha inválida'}, 400
         
-        token = create_access_token(identity = paciente.id)
         
-        return {"token" : token}, 200
+        token = create_access_token(identity = paciente.id)
+        schema = PacienteSchema()
+        
+        return {"token" : token}, schema.dump(paciente.id), 200
 
 
 
