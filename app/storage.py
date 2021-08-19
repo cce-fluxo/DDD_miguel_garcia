@@ -30,6 +30,10 @@ class Storage:
         self.client.delete_object(Bucket= 'storage-fluxo',
                                   Key=f'{self.project_name}/{file_key}')
 
+    def delete_objects(self, keys) -> None:
+        self.client.delete_objects(Bucket= 'storage-fluxo',
+                                   Delete={'Objects': keys,
+                                           'Quiet': True})
 
 
 

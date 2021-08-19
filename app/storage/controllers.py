@@ -9,4 +9,4 @@ class FileStorage(MethodView):
         url = storage.put_url(file_key=file_key)
 
         return {'url': url,
-                'nome': file_key}, 201
+                'nome': file_key}
