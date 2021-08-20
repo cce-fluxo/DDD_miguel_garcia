@@ -3,7 +3,7 @@ from app.config import Config
 from app.extensions import db, migrate, jwt, ma
 from app.medico.routes import medico_api
 from app.paciente.routes import paciente_api
-from app.storage.routes import storage_api
+from app.storages.routes import storage_api
 
 def create_app():
     app = Flask(__name__)

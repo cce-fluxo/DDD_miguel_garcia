@@ -1,5 +1,5 @@
 from flask import Blueprint
-from app.storage.controllers import FileStorage
+from app.storages.controllers import FileStorage
 
 storage_api = Blueprint('storage_api',__name__)
 
