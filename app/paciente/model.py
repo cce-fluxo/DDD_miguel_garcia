@@ -9,7 +9,7 @@ class Paciente (db.Model):
     id = db.Column(db.Integer, primary_key = True)
     nome = db.Column(db.String(20), nullable = False)
     email = db.Column(db.String(40), nullable = False)
-    cpf = db.Column(db.Integer, nullable = False)
+    cpf = db.Column(db.String(40), nullable = False)
     idade = db.Column(db.Integer, nullable = False)
     senha_hash = db.Column(db.LargeBinary(128), nullable = False)
     

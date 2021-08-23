@@ -12,7 +12,7 @@ class Medico (db.Model):
     nome = db.Column(db.String(20), nullable = False)
     email = db.Column(db.String(40), nullable = False)
     especialidade = db.Column(db.String(40), nullable = False)
-    cpf = db.Column(db.Integer, nullable = False)
+    cpf = db.Column(db.String(40), nullable = False)
     crm = db.Column(db.Integer, nullable = False)
     idade = db.Column(db.Integer, nullable = False)
     senha_hash = db.Column(db.LargeBinary(128), nullable = False)
