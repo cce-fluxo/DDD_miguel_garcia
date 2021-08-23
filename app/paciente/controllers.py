@@ -95,9 +95,9 @@ class PacienteLogin(MethodView):
         
         
         token = create_access_token(identity = paciente.id)
-        schema = PacienteSchema()
+
         
-        return {"token" : token}, schema.dump(paciente.id), 200
+        return {"token" : token}, 200
 
 
 
