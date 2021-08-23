@@ -15,6 +15,7 @@ marshmallow-sqlalchemy = "*"
 gunicorn = "*"
 psycopg2 = "*"
 boto3 = "*"
+flask-cors = "*"
 
 [dev-packages]
 
