@@ -24,7 +24,7 @@ class ConsultaPost(MethodView): #/paciente/create
 
         schema.paciente = paciente
         schema.medico= medico
-        medico.pacientes.append(paciente)
+        
 
         consulta = schema.load(dados)
         consulta.save()
