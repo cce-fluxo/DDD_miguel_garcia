@@ -13,7 +13,7 @@ class Paciente (db.Model):
     idade = db.Column(db.Integer, nullable = False)
     senha_hash = db.Column(db.LargeBinary(128), nullable = False)
     
-
+    consulta = db.relationship("Consulta", backref = 'paciente')
     
 
 

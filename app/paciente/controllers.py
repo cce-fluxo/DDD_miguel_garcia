@@ -13,9 +13,11 @@ from sqlalchemy import exc
 
 class PacientesCreate (MethodView): 
     def get(self):
-        schema = PacienteSchema(many = True)
-        return jsonify(schema.dump(Paciente.query.all())),200
 
+        schema = PacienteSchema(many = True)
+        pagina = request.args.get('pag', 1, type=int)
+        pacientes = Paciente.query.paginate(page=pagina, per_page=10)
+        return jsonify(schema.dump(pacientes.items)),200
 
     def post(self):
         dados = request.json 
@@ -98,8 +100,6 @@ class PacienteLogin(MethodView):
 
         
         return {"token" : token}, 200
-
-
 
 
 

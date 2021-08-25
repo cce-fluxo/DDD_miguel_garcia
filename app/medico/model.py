@@ -17,6 +17,8 @@ class Medico (db.Model):
     idade = db.Column(db.Integer, nullable = False)
     senha_hash = db.Column(db.LargeBinary(128), nullable = False)
     avatar = db.Column(db.String(64), unique = True, default = None )
+
+    consulta = db.relationship("Consulta", backref = 'medico')
     
 
     

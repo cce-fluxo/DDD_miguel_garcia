@@ -1,5 +1,5 @@
 from os import environ
-
+#Configuracoes gerais, o SQLALCHEMY_DATABASE_URI  é trocado ao reiniciar o banco de dados
 class Config:
     SECRET_KEY = environ.get('SECRET_KEY')
     SQLALCHEMY_DATABASE_URI = environ.get('DATABASE_URI')

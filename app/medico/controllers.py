@@ -17,7 +17,9 @@ from sqlalchemy import exc
 class MedicosCreate (MethodView): 
     def get(self):
         schema = MedicoSchema(many = True)
-        return jsonify(schema.dump(Medico.query.all())),200
+        pagina = request.args.get('pag', 1, type=int)
+        medico = Medico.query.paginate(page=pagina, per_page=10)
+        return jsonify(schema.dump(medico.items)),200
 
 
     def post(self):
