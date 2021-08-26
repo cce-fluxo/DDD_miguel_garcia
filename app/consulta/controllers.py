@@ -8,13 +8,13 @@ from app.consulta.models import Consulta
 from app.consulta.schemas import ConsultaSchema
 
 
-class ConsultaGet(MethodView): #/paciente
+class ConsultaGet(MethodView): #/consulta
     def get(self):
 
         schema = ConsultaSchema(many = True)
         return jsonify(schema.dump(Consulta.query.all())),200
 
-class ConsultaPost(MethodView): #/paciente/create
+class ConsultaPost(MethodView): #/consulta
     def post(self):
         
         dados = request.json
