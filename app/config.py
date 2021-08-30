@@ -10,4 +10,11 @@ class Config:
     JWT_SECRET_KEY = environ.get('JWL_SECRET_KEY')
 
     DEBUG = True
+        
+    MAIL_USE_TLS =True 
+    MAIL_USE_SSL =False
+    MAIL_SERVER =environ.get('MAIL_SERVER')
+    MAIL_PORT = environ.get('MAIL_PORT')
+    MAIL_USERNAME =environ.get('MAIL_USERNAME')
+    MAIL_PASSWORD =environ.get('MAIL_PASSWORD')
     
