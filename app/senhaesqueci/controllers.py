@@ -23,7 +23,7 @@ class SenhaMail(MethodView):#/send_mail/reset
                 refresh_token = create_refresh_token(identity=user.id, additional_claims={'user_type': "paciente"})
             else:
                 return {"Error":"Esse email não está cadastrado cadastrado"}, 400
-        msg = Message(sender = 'julia.xexeo@poli.ufrj.br',
+        msg = Message(sender = 'mpgarcia@poli.ufrj.br',
         recipients=[user.email],
         subject = 'Mudança de senha',
         html = render_template('recupera.html', nome = user.nome, link=token))
@@ -42,7 +42,7 @@ class SenhaNova(MethodView): #/reset/<token>
         if not user: return {"Error":"Token Inválido ou expirado"},404
         user.senha = dados["senha"]
         user.save()
-        msg = Message(sender = 'julia.xexeo@poli.ufrj.br',
+        msg = Message(sender = 'mpgarcia@poli.ufrj.br',
         recipients=[user.email],
         subject = 'Senha Alterada',
         html = render_template('altera.html', nome = user.nome))
