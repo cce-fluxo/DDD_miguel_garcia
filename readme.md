@@ -65,7 +65,6 @@ Link: https://dashboard.heroku.com/apps/ddd-miguel-garcia
 |/paciente/details/<int:id>|PATCH|paciente logado pode alterar alguma de suas informações|
 |/paciente/details/<int:id>|DELETE|paciente logado pode deletar seu perfil|
 |/files/put_url/formato|GET|para pegar o caminho do digital ocean|
-
 |/consulta|GET|para visualizar todas as consultas do sistema|
 |/consulta|POST|Criar nova consulta com a data, hora, id do medico e do paciente|
 
