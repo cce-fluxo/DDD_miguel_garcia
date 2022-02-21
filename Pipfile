@@ -11,6 +11,15 @@ bcrypt = "*"
 flask-jwt-extended = "*"
 marshmallow = "*"
 flask-marshmallow = "*"
+marshmallow-sqlalchemy = "*"
+gunicorn = "*"
+psycopg2 = "*"
+boto3 = "*"
+flask-cors = "*"
+google-api-python-client = "*"
+google-auth-httplib2 = "*"
+google-auth-oauthlib = "*"
+flask-mail = "*"
 
 [dev-packages]
 

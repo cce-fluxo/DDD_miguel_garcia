@@ -1,113 +1,102 @@
+from flask.wrappers import Request
 from app.medico.model import Medico
-from flask import request, jsonify
+from flask import request, jsonify, abort,make_response
 from app.extensions import db
 from flask.views import MethodView 
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
-
+from app.medico.schema import MedicoSchema
+from app.filters import filter
 import bcrypt
+from sqlalchemy import exc
+
+
+
 
 
 
 class MedicosCreate (MethodView): 
     def get(self):
-        medico=Medico.query.all()
-        return jsonify([medico.json() for medico in medico]), 200
+        schema = MedicoSchema(many = True)
+        pagina = request.args.get('pag', 1, type=int)
+        medico = Medico.query.paginate(page=pagina, per_page=10)
+        return jsonify(schema.dump(medico.items)),200
 
 
     def post(self):
         dados = request.json 
-        nome = dados.get('nome')
-        cpf = dados.get ('cpf')
-        idade = dados.get ('idade')
-        email = dados.get ('email')
-        senha = dados.get ('senha')
-        especialidade = dados.get('especialidade')
-        crm = dados.get('crm')
+        schema = MedicoSchema()
+        medico = schema.load(dados)
 
-        medico = Medico.query.filter_by(email = email).first()
-
-        if medico:
-            return {'error':'email já cadastrado'}, 400
-
-    
-
-        if not isinstance (nome,str) or not isinstance (idade, int):
-            return {'error':'tipo invalido'}, 400
+        db.session.add(medico)
+        try:
+            db.session.commit()
+        except exc.IntegrityError as err:
+            db.session.rollback()
+            abort(
+                make_response(jsonify({'errors':str(err.orig)},400)))
         
-        if not isinstance (cpf,int) or not isinstance (email, str):
-            return {'error':'tipo invalido'}, 400
-
-        senha_hash = bcrypt.hashpw(senha.encode(), bcrypt.gensalt())
 
 
-        medico = Medico(nome=nome, cpf=cpf, idade=idade, email=email, especialidade=especialidade, crm=crm, senha_hash=senha_hash)
-        db.session.add (medico)
-        db.session.commit()
 
-        return medico.json(), 200
+
+
+
+
+        return schema.dump(medico),200
 
 class MedicosDetails(MethodView): #/medico/details/<int:id>
     decorators = [jwt_required()]
     def get(self, id):
         if (get_jwt_identity() != id):
-            return {'error':'Usuario não permitido'}, 400
-
-        medico = Medico.query.get_or_404(id)
+            return {'error':'Usuario não permitido'}, 400       
+        schema = filter.getSchema(
+            qs=request.args,schema_cls=MedicoSchema)
         
-        return medico.json(), 200
+        medico = Medico.query.get_or_404(id)
+        return schema.dump(medico),200
 
     def put(self, id):
         if (get_jwt_identity() != id):
             return {'error':'Usuario não permitido'}, 400
-        medico=Medico.query.get_or_404(id)
-        dados = request.json
 
-        nome = dados.get('nome')
-        email = dados.get ('email')
-        cpf = dados.get ('cpf')
-        idade = dados.get ('idade')
-       
+        medico = Medico.query.get_or_404(id)
+        schema = MedicoSchema()
+        medico = schema.load(request.json,instance=medico)
 
-        medico.nome = nome
-        medico.email = email
-        medico.cpf = cpf
-        medico.idade = idade
-
-
-        db.session.commit()
-
-        return medico.json(), 200
+        db.session.add(medico)
+        try:
+            db.session.commit()
+        except exc.IntegrityError as err:
+            db.session.rollback()
+            abort(
+                make_response(jsonify({'errors':str(err.orig)},400)))
+        return schema.dump(medico),200
 
     def patch(self, id):
         if (get_jwt_identity() != id):
             return {'error':'Usuario não permitido'}, 400
-
         medico = Medico.query.get_or_404(id)
-        medico = Medico.query.get_or_404(id)
-        dados = request.json
+        schema = MedicoSchema()
+        medico = schema.load(request.json, instance=medico, partial = True)
 
-        nome = dados.get('nome', medico.nome)
-        email = dados.get ('email', medico.email)
-        cpf = dados.get ('cpf', medico.cpf)
-        idade = dados.get ('idade', medico.idade)
-        
+        db.session.add(medico)
+        try:
+            db.session.commit()
+        except exc.IntegrityError as err:
+            db.session.rollback()
+            abort(
+                make_response(jsonify({'errors':str(err.orig)},400)))
+        return schema.dump(medico),200
 
-        medico.nome = nome
-        medico.email = email
-        medico.cpf = cpf
-        medico.idade = idade
 
-        db.session.commit()
 
-        return medico.json(), 200
-    
     def delete(self, id):
         if (get_jwt_identity() != id):
             return {'error':'Usuario não permitido'}, 400
         medico= Medico.query.get_or_404(id)
         db.session.delete(medico)
         db.session.commit()
-        return medico.json(), 200
+        return {}, 200
 
 class MedicoLogin(MethodView):
     def post(self):
@@ -116,7 +105,7 @@ class MedicoLogin(MethodView):
         senha = dados.get ('senha')
         
         medico = Medico.query.filter_by(email = email).first()
-        if (not medico) or (not bcrypt.checkpw(senha.encode(), medico.senha_hash)):
+        if (not medico) or (not bcrypt.checkpw(senha.encode('utf8'), medico.senha_hash)):
             return {'error':'Email ou senha inválida'}, 400
         
         token = create_access_token(identity = medico.id)
